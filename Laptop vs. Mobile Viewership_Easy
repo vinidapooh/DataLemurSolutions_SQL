@@ -32,3 +32,41 @@ from viewership
 
 
 The only thing I missed out on this was putting the sum bracket from case to the end. If you remove them, you get it column wise.
+
+
+
+*DATALEMUR Solution*
+To compare the viewership on laptops versus mobile devices, we can use a CASE conditional statement to define the device type according to the question's specifications.
+
+The tablet and phone categories are considered to be the 'mobile' device type and the laptop can be set as its own device type (i.e., 'laptop').
+
+SELECT 
+  CASE WHEN device_type = 'laptop' THEN 1 ELSE 0 END AS laptop_views, 
+  CASE WHEN device_type IN ('tablet', 'phone') THEN 1 ELSE 0 END AS mobile_views 
+FROM viewership;
+laptop_views	mobile_views
+0	1
+1	0
+1	0
+0	1
+0	1
+Let us explain how the CASE statement works using the mobile_views field as an example.
+
+When the device is a tablet or a phone, it is assigned the value of 1. Otherwise, it is given the value of 0.
+The IN operator after device_type means OR, as in when the device type is a table OR phone, then it is assigned the value of 1.
+Next, we calculate the number of viewership for laptops and mobiles. We can do so by applying the SUM function.
+
+Solution:
+
+SELECT 
+  SUM(CASE WHEN device_type = 'laptop' THEN 1 ELSE 0 END) AS laptop_views, 
+  SUM(CASE WHEN device_type IN ('tablet', 'phone') THEN 1 ELSE 0 END) AS mobile_views 
+FROM viewership;
+laptop_views	mobile_views
+2	3
+Ok, timeout guys!
+
+
+
+
+
